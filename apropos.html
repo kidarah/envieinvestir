@@ -181,9 +181,12 @@
     }
     .about-cta p strong { color: var(--text); }
 
+    @media (max-width: 768px) {
+      .about-wrap { padding: 3rem 4% 4rem; }
+      .values-grid { grid-template-columns: 1fr; }
+    }
     @media (max-width: 600px) {
       .author-card { flex-direction: column; }
-      .values-grid { grid-template-columns: 1fr; }
       .stats-row { flex-direction: column; }
     }
   </style>
