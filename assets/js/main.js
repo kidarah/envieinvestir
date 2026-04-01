@@ -7,14 +7,10 @@ const API_URL = 'api/ticker.php';
 
 /* Faits financiers généraux — ticker statique */
 const FINANCE_FACTS = [
-  { name: 'Règle des 72',        value: '÷ taux = années pour doubler' },
   { name: 'DCA',                 value: 'investir régulièrement réduit le risque' },
   { name: 'Diversification',     value: 'clé pour limiter la volatilité' },
   { name: 'Horizon long terme',  value: '+10 ans recommandé en bourse' },
-  { name: 'Frais de gestion',    value: '1% de frais = −20% sur 30 ans' },
-  { name: 'Effet du temps',      value: '100 € à 7%/an = 761 € en 30 ans' },
   { name: 'ETF vs fonds actifs', value: '80% des fonds actifs sous-performent' },
-  { name: 'Rééquilibrage',       value: 'ajuster son portefeuille 1×/an' },
   { name: 'Fonds d\'urgence',    value: '3 à 6 mois de dépenses en réserve' },
   { name: 'Intérêts composés',   value: 'le temps est ton meilleur allié' },
 ];
