@@ -3,7 +3,7 @@
    ══════════════════════════════════════════ */
 'use strict';
 
-const API_URL = 'ticker.php';
+const API_URL = 'api/ticker.php';
 
 /* Faits financiers généraux — ticker statique */
 const FINANCE_FACTS = [
