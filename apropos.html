@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>À propos — EnvieInvestir</title>
+  <meta name="description" content="EnvieInvestir, c'est un blog belge indépendant sur l'investissement. Guides concrets, infos vérifiées, zéro jargon inutile.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3823599656644016" crossorigin="anonymous"></script>
+  <style>
+    .about-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 5rem 5% 6rem;
+    }
+
+    .about-header {
+      margin-bottom: 3.5rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .about-header .page-tag {
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 500;
+      display: block;
+      margin-bottom: 0.8rem;
+    }
+    .about-header h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.2rem;
+    }
+    .about-header h1 em { font-style: italic; color: var(--gold); }
+    .about-header p {
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.85;
+      font-weight: 300;
+      max-width: 560px;
+    }
+
+    /* Carte auteur */
+    .author-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 2rem 2.2rem;
+      display: flex;
+      gap: 1.8rem;
+      align-items: flex-start;
+      margin-bottom: 3rem;
+    }
+    .author-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(212,168,75,0.3), rgba(212,168,75,0.08));
+      border: 1px solid rgba(212,168,75,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Fraunces', serif;
+      font-size: 1.6rem;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+    .author-info h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.15rem;
+      margin-bottom: 0.3rem;
+    }
+    .author-info p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* Sections */
+    .about-section {
+      margin-bottom: 3rem;
+    }
+    .about-section h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.35rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      padding-bottom: 0.7rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .about-section p {
+      font-size: 0.97rem;
+      color: var(--muted);
+      line-height: 1.85;
+      margin-bottom: 1rem;
+      font-weight: 300;
+    }
+    .about-section p strong { color: var(--text); font-weight: 500; }
+
+    /* Valeurs */
+    .values-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-top: 1.5rem;
+    }
+    .value-item {
+      background: var(--bg2);
+      padding: 1.6rem;
+    }
+    .value-num {
+      font-family: 'Fraunces', serif;
+      font-size: 1.8rem;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(212,168,75,0.25);
+      margin-bottom: 0.6rem;
+      line-height: 1;
+    }
+    .value-title {
+      font-family: 'Fraunces', serif;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+    .value-text {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* Stats */
+    .stats-row {
+      display: flex;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+    .stat-item {
+      flex: 1;
+      background: var(--bg2);
+      padding: 1.4rem;
+      text-align: center;
+    }
+    .stat-item-val {
+      font-family: 'Fraunces', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--gold);
+      display: block;
+    }
+    .stat-item-label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    /* CTA */
+    .about-cta {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--gold);
+      padding: 1.8rem 2rem;
+      margin-top: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .about-cta p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin: 0;
+    }
+    .about-cta p strong { color: var(--text); }
+
+    @media (max-width: 600px) {
+      .author-card { flex-direction: column; }
+      .values-grid { grid-template-columns: 1fr; }
+      .stats-row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo"><span class="w1">Envie</span><span class="w2">Investir</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Articles</a></li>
+    <li><a href="calculateur.html">Calculateur</a></li>
+    <li><a href="apropos.html" style="color:var(--gold);">À propos</a></li>
+  </ul>
+</nav>
+
+<div class="about-wrap">
+
+  <div class="about-header">
+    <span class="page-tag">À propos</span>
+    <h1>Un blog belge,<br><em>sans filtre.</em></h1>
+    <p>EnvieInvestir est né d'une frustration simple : l'information financière est soit trop complexe, soit trop vague, soit adaptée au marché français. On a voulu faire différemment.</p>
+  </div>
+
+  <!-- AUTEUR -->
+  <div class="author-card">
+    <div class="author-avatar">E</div>
+    <div class="author-info">
+      <h2>EnvieInvestir</h2>
+      <p>Blog indépendant basé en Belgique. Pas de banque derrière, pas d'agenda caché. Juste quelqu'un qui a appris à investir par lui-même et qui partage ce qu'il aurait voulu lire au départ.</p>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-item">
+      <span class="stat-item-val">100%</span>
+      <span class="stat-item-label">Contenu gratuit</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-item-val">🇧🇪</span>
+      <span class="stat-item-label">Contexte belge</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-item-val">0</span>
+      <span class="stat-item-label">Lien sponsorisé caché</span>
+    </div>
+  </div>
+
+  <!-- POURQUOI -->
+  <div class="about-section">
+    <h2>Pourquoi ce blog ?</h2>
+    <p>Quand on commence à s'intéresser à l'investissement en Belgique, on tombe sur des articles français qui parlent de PEA, d'assurance-vie ou de livret A — des outils qui n'existent pas chez nous. Ou alors sur des contenus anglais qui ignorent complètement la fiscalité belge (TOB, précompte mobilier, déclaration BNB).</p>
+    <p><strong>EnvieInvestir, c'est la ressource qu'on aurait aimé avoir.</strong> Des guides qui parlent de DEGIRO, Trade Republic et IBKR en tenant compte des règles fiscales belges. Des explications claires, sans jargon inutile, pour quelqu'un qui part de zéro.</p>
+  </div>
+
+  <!-- VALEURS -->
+  <div class="about-section">
+    <h2>Ce qu'on défend</h2>
+    <div class="values-grid">
+      <div class="value-item">
+        <div class="value-num">01</div>
+        <div class="value-title">Contexte belge réel</div>
+        <div class="value-text">TOB, précompte mobilier, déclaration BNB — on traite la réalité belge, pas des généralités qui ne s'appliquent pas ici.</div>
+      </div>
+      <div class="value-item">
+        <div class="value-num">02</div>
+        <div class="value-title">Zéro jargon inutile</div>
+        <div class="value-text">Chaque concept est expliqué simplement. Simple ne veut pas dire superficiel — ça veut dire accessible.</div>
+      </div>
+      <div class="value-item">
+        <div class="value-num">03</div>
+        <div class="value-title">Transparence totale</div>
+        <div class="value-text">Ce site est financé uniquement par la publicité (Google AdSense). Aucun lien sponsorisé, aucune recommandation payée.</div>
+      </div>
+      <div class="value-item">
+        <div class="value-num">04</div>
+        <div class="value-title">Informations vérifiées</div>
+        <div class="value-text">On vérifie les frais, les taux et les règles fiscales directement à la source avant de publier. Et on met à jour quand ça change.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CE QU'ON N'EST PAS -->
+  <div class="about-section">
+    <h2>Ce qu'on n'est pas</h2>
+    <p>EnvieInvestir n'est <strong>pas un conseiller financier agréé</strong>. On ne donne pas de conseils personnalisés et on ne gère pas d'argent pour autrui. Tout ce qu'on publie est informatif et éducatif.</p>
+    <p>Pour toute décision financière importante, consulte un professionnel agréé par la <strong>FSMA</strong> (Autorité des services et marchés financiers en Belgique).</p>
+  </div>
+
+  <!-- CTA -->
+  <div class="about-cta">
+    <p><strong>Une question, une suggestion, une erreur à signaler ?</strong><br>Je lis tous les messages.</p>
+    <a href="contact.html" class="btn-primary">Me contacter →</a>
+  </div>
+
+</div>
+
+<footer>
+  <a href="index.html" class="logo"><span class="w1">Envie</span><span class="w2">Investir</span></a>
+  <span>© 2025 EnvieInvestir · Ce site ne constitue pas un conseil financier.</span>
+  <div class="footer-links">
+    <a href="mentions-legales.html">Mentions légales</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</footer>
+
+</body>
+</html>

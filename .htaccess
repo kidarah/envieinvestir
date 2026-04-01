@@ -1,0 +1,10 @@
+Options -Indexes
+RewriteEngine On
+
+# Redirige .html vers URL propre (301 = permanent)
+RewriteCond %{THE_REQUEST} /([^.]+)\.html [NC]
+RewriteRule ^ /%1 [NC,L,R=301]
+
+# Sert le fichier .html quand on accède sans extension
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^([^.]+)$ $1.html [NC,L]

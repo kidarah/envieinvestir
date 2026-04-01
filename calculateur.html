@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculateur d'intérêts composés — EnvieInvestir</title>
+  <meta name="description" content="Simule la croissance de ton épargne grâce aux intérêts composés. Visualise l'impact du temps et du rendement sur ton capital.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3823599656644016" crossorigin="anonymous"></script>
+  <style>
+
+    .calc-wrap {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 4rem 5% 6rem;
+    }
+
+    /* ── HEADER ── */
+    .calc-header {
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .calc-header .page-tag {
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 500;
+      display: block;
+      margin-bottom: 0.8rem;
+    }
+    .calc-header h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      letter-spacing: -0.025em;
+      margin-bottom: 0.6rem;
+      line-height: 1.1;
+    }
+    .calc-header h1 em { font-style: italic; color: var(--gold); }
+    .calc-header p {
+      color: var(--muted);
+      font-size: 0.97rem;
+      font-weight: 300;
+      max-width: 560px;
+    }
+
+    /* ── LAYOUT ── */
+    .calc-layout {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+    /* ── PANEL INPUTS ── */
+    .calc-panel {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      position: sticky;
+      top: 90px;
+    }
+
+    .calc-panel h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 1rem;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.6rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .input-group {
+      margin-bottom: 1.4rem;
+    }
+
+    .input-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.5rem;
+    }
+    .input-label span {
+      font-size: 0.83rem;
+      color: var(--muted);
+    }
+    .input-label strong {
+      font-size: 0.97rem;
+      color: var(--gold);
+      font-weight: 600;
+      font-family: 'Fraunces', serif;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 3px;
+      background: var(--bg3);
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--gold);
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+    input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+    input[type="range"]::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--gold);
+      cursor: pointer;
+      border: none;
+    }
+
+    .range-bounds {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* Inflation toggle */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.4rem;
+      padding: 0.8rem 1rem;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+    }
+    .toggle-row span {
+      font-size: 0.83rem;
+      color: var(--muted);
+    }
+    .toggle {
+      position: relative;
+      width: 36px;
+      height: 20px;
+      cursor: pointer;
+    }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider {
+      position: absolute;
+      inset: 0;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      transition: 0.2s;
+    }
+    .toggle-slider::before {
+      content: '';
+      position: absolute;
+      width: 12px; height: 12px;
+      left: 3px; top: 3px;
+      background: var(--muted);
+      border-radius: 50%;
+      transition: 0.2s;
+    }
+    .toggle input:checked + .toggle-slider { background: rgba(212,168,75,0.2); border-color: var(--gold); }
+    .toggle input:checked + .toggle-slider::before { background: var(--gold); transform: translateX(16px); }
+
+    /* ── RÉSULTATS STATS ── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 2rem;
+    }
+    .stat-box {
+      background: var(--bg2);
+      padding: 1.4rem 1.6rem;
+    }
+    .stat-box-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+    .stat-box-value {
+      font-family: 'Fraunces', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+    .stat-box-value.gold { color: var(--gold); }
+    .stat-box-value.green { color: var(--green); }
+    .stat-box-sub {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    /* ── GRAPHIQUE ── */
+    .chart-box {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 1.8rem;
+      margin-bottom: 2rem;
+    }
+    .chart-box-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.4rem;
+    }
+    .chart-box-title {
+      font-family: 'Fraunces', serif;
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+    .chart-legend {
+      display: flex;
+      gap: 1.2rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .chart-legend-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 4px;
+      vertical-align: middle;
+    }
+    .chart-canvas-wrap { position: relative; height: 260px; }
+
+    /* ── TABLEAU ── */
+    .table-section {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+    }
+    .table-section-header {
+      padding: 1.2rem 1.6rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .table-section-header h3 {
+      font-family: 'Fraunces', serif;
+      font-size: 0.95rem;
+    }
+    .table-section-header span {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .table-scroll { overflow-x: auto; }
+    .calc-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.83rem;
+    }
+    .calc-table thead tr { background: var(--bg3); }
+    .calc-table thead th {
+      padding: 0.8rem 1rem;
+      text-align: right;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    .calc-table thead th:first-child { text-align: left; }
+    .calc-table tbody td {
+      padding: 0.7rem 1rem;
+      text-align: right;
+      border-bottom: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .calc-table tbody td:first-child { text-align: left; color: var(--text); font-weight: 500; }
+    .calc-table tbody td.highlight { color: var(--gold); font-weight: 500; }
+    .calc-table tbody td.green-val { color: var(--green); }
+    .calc-table tbody tr:last-child td { border-bottom: none; }
+    .calc-table tbody tr:hover td { background: var(--bg3); }
+
+    @media (max-width: 860px) {
+      .calc-layout { grid-template-columns: 1fr; }
+      .calc-panel { position: static; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 520px) {
+      .stats-grid { grid-template-columns: 1fr; }
+      .calc-wrap { padding: 3rem 4% 4rem; }
+    }
+  </style>
+</head>
+<body class="page-calc">
+
+<nav>
+  <a href="index.html" class="logo"><span class="w1">Envie</span><span class="w2">Investir</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Articles</a></li>
+    <li><a href="calculateur.html" style="color:var(--gold);">Calculateur</a></li>
+    <li><a href="apropos.html">À propos</a></li>
+  </ul>
+</nav>
+
+<div class="calc-wrap">
+
+  <div class="calc-header">
+    <span class="page-tag">Outil gratuit</span>
+    <h1>Calculateur d'<em>intérêts composés</em></h1>
+    <p>Simule la croissance de ton capital selon ton investissement initial, tes versements mensuels et ton horizon de temps.</p>
+  </div>
+
+  <div class="calc-layout">
+
+    <!-- ══ PANEL GAUCHE ══ -->
+    <div class="calc-panel">
+      <h2>Tes paramètres</h2>
+
+      <div class="input-group">
+        <div class="input-label">
+          <span>Capital initial</span>
+          <strong id="val-capital">1 000 €</strong>
+        </div>
+        <input type="range" id="capital" min="0" max="50000" step="500" value="1000">
+        <div class="range-bounds"><span>0 €</span><span>50 000 €</span></div>
+      </div>
+
+      <div class="input-group">
+        <div class="input-label">
+          <span>Versement mensuel</span>
+          <strong id="val-mensuel">100 €</strong>
+        </div>
+        <input type="range" id="mensuel" min="0" max="2000" step="25" value="100">
+        <div class="range-bounds"><span>0 €</span><span>2 000 €</span></div>
+      </div>
+
+      <div class="input-group">
+        <div class="input-label">
+          <span>Rendement annuel estimé</span>
+          <strong id="val-rendement">7 %</strong>
+        </div>
+        <input type="range" id="rendement" min="1" max="15" step="0.5" value="7">
+        <div class="range-bounds"><span>1 %</span><span>15 %</span></div>
+      </div>
+
+      <div class="input-group">
+        <div class="input-label">
+          <span>Durée</span>
+          <strong id="val-duree">20 ans</strong>
+        </div>
+        <input type="range" id="duree" min="1" max="40" step="1" value="20">
+        <div class="range-bounds"><span>1 an</span><span>40 ans</span></div>
+      </div>
+
+      <div class="toggle-row">
+        <span>Afficher l'impact de l'inflation (2%)</span>
+        <label class="toggle">
+          <input type="checkbox" id="toggle-inflation" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div style="padding: 1rem; background: var(--bg3); border: 1px solid var(--border); font-size: 0.78rem; color: var(--muted); line-height: 1.6;">
+        ⚠️ Les rendements sont estimatifs. Les marchés financiers comportent un risque de perte en capital. Cette simulation est fournie à titre éducatif uniquement.
+      </div>
+    </div>
+
+    <!-- ══ RÉSULTATS ══ -->
+    <div class="calc-results">
+
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-box-label">Capital final</div>
+          <div class="stat-box-value gold" id="res-final">—</div>
+          <div class="stat-box-sub" id="res-final-reel"></div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-box-label">Total versé</div>
+          <div class="stat-box-value" id="res-verse">—</div>
+          <div class="stat-box-sub">Capital + mensualités</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-box-label">Intérêts générés</div>
+          <div class="stat-box-value green" id="res-interets">—</div>
+          <div class="stat-box-sub" id="res-ratio">—</div>
+        </div>
+      </div>
+
+      <!-- Graphique évolution -->
+      <div class="chart-box">
+        <div class="chart-box-header">
+          <span class="chart-box-title">Évolution du capital dans le temps</span>
+          <div class="chart-legend">
+            <span><span class="chart-legend-dot" style="background:#D4A84B"></span>Capital total</span>
+            <span><span class="chart-legend-dot" style="background:#4CAF50"></span>Intérêts</span>
+            <span><span class="chart-legend-dot" style="background:#555"></span>Versements</span>
+          </div>
+        </div>
+        <div class="chart-canvas-wrap">
+          <canvas id="chart-evolution"></canvas>
+        </div>
+      </div>
+
+      <!-- Graphique répartition -->
+      <div class="chart-box">
+        <div class="chart-box-header">
+          <span class="chart-box-title">Répartition finale</span>
+        </div>
+        <div class="chart-canvas-wrap" style="height:200px;">
+          <canvas id="chart-repartition"></canvas>
+        </div>
+      </div>
+
+      <!-- Tableau annuel -->
+      <div class="table-section">
+        <div class="table-section-header">
+          <h3>Projection année par année</h3>
+          <span id="table-label">—</span>
+        </div>
+        <div class="table-scroll">
+          <table class="calc-table">
+            <thead>
+              <tr>
+                <th>Année</th>
+                <th>Versements cumulés</th>
+                <th>Intérêts cumulés</th>
+                <th>Capital total</th>
+                <th>Valeur réelle*</th>
+              </tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+          </table>
+        </div>
+        <div style="padding:0.8rem 1.2rem; font-size:0.72rem; color:var(--muted); border-top:1px solid var(--border);">
+          * Valeur réelle = ajustée d'une inflation estimée à 2%/an
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  <a href="index.html" class="logo"><span class="w1">Envie</span><span class="w2">Investir</span></a>
+  <span>© 2025 EnvieInvestir · Outil éducatif — pas un conseil financier.</span>
+  <div class="footer-links">
+    <a href="mentions-legales.html">Mentions légales</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</footer>
+
+<script>
+  const fmt = n => new Intl.NumberFormat('fr-BE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
+  const fmtShort = n => {
+    if (n >= 1000000) return (n/1000000).toFixed(1) + ' M€';
+    if (n >= 1000) return (n/1000).toFixed(0) + ' k€';
+    return fmt(n);
+  };
+
+  let chartEvol = null, chartRep = null;
+
+  function compute() {
+    const capital   = +document.getElementById('capital').value;
+    const mensuel   = +document.getElementById('mensuel').value;
+    const rendement = +document.getElementById('rendement').value / 100;
+    const duree     = +document.getElementById('duree').value;
+    const inflation = document.getElementById('toggle-inflation').checked ? 0.02 : 0;
+
+    const r = rendement / 12;
+    const n = duree * 12;
+
+    // Labels
+    document.getElementById('val-capital').textContent   = fmt(capital);
+    document.getElementById('val-mensuel').textContent   = fmt(mensuel);
+    document.getElementById('val-rendement').textContent = (+document.getElementById('rendement').value).toFixed(1) + ' %';
+    document.getElementById('val-duree').textContent     = duree + ' an' + (duree > 1 ? 's' : '');
+
+    // Calcul mensuel
+    const labels = [], dataCapital = [], dataVerse = [], dataInterets = [], dataReel = [];
+    let totalVerse = capital;
+    let valeur = capital;
+
+    for (let mois = 1; mois <= n; mois++) {
+      valeur = valeur * (1 + r) + mensuel;
+      totalVerse = capital + mensuel * mois;
+      const interets = valeur - totalVerse;
+      const reel = valeur / Math.pow(1 + inflation, mois / 12);
+
+      if (mois % 12 === 0) {
+        const annee = mois / 12;
+        labels.push('An ' + annee);
+        dataCapital.push(Math.round(valeur));
+        dataVerse.push(Math.round(totalVerse));
+        dataInterets.push(Math.round(interets));
+        dataReel.push(Math.round(reel));
+      }
+    }
+
+    const finalCapital  = dataCapital[dataCapital.length - 1];
+    const finalVerse    = dataVerse[dataVerse.length - 1];
+    const finalInterets = dataInterets[dataInterets.length - 1];
+    const finalReel     = dataReel[dataReel.length - 1];
+    const ratio         = Math.round((finalInterets / finalVerse) * 100);
+
+    // Stats
+    document.getElementById('res-final').textContent      = fmtShort(finalCapital);
+    document.getElementById('res-final-reel').textContent = inflation ? 'Valeur réelle : ' + fmtShort(finalReel) : '';
+    document.getElementById('res-verse').textContent      = fmtShort(finalVerse);
+    document.getElementById('res-interets').textContent   = fmtShort(finalInterets);
+    document.getElementById('res-ratio').textContent      = 'Soit +' + ratio + '% de ton capital versé';
+    document.getElementById('table-label').textContent    = 'Rendement ' + (+document.getElementById('rendement').value).toFixed(1) + '% · ' + duree + ' ans';
+
+    // Graphique évolution (area)
+    const ctxE = document.getElementById('chart-evolution').getContext('2d');
+    if (chartEvol) chartEvol.destroy();
+    chartEvol = new Chart(ctxE, {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [
+          {
+            label: 'Capital total',
+            data: dataCapital,
+            borderColor: '#D4A84B',
+            backgroundColor: 'rgba(212,168,75,0.08)',
+            borderWidth: 2,
+            fill: true,
+            tension: 0.3,
+            pointRadius: duree <= 15 ? 3 : 0,
+            pointHoverRadius: 5,
+          },
+          {
+            label: 'Intérêts',
+            data: dataInterets,
+            borderColor: '#4CAF50',
+            backgroundColor: 'rgba(76,175,80,0.06)',
+            borderWidth: 1.5,
+            fill: true,
+            tension: 0.3,
+            pointRadius: 0,
+            pointHoverRadius: 4,
+            borderDash: [4, 3],
+          },
+          {
+            label: 'Versements',
+            data: dataVerse,
+            borderColor: '#555',
+            backgroundColor: 'transparent',
+            borderWidth: 1.5,
+            fill: false,
+            tension: 0.3,
+            pointRadius: 0,
+            pointHoverRadius: 4,
+            borderDash: [2, 4],
+          },
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#131416',
+            borderColor: 'rgba(255,255,255,0.07)',
+            borderWidth: 1,
+            titleColor: '#F0EDE8',
+            bodyColor: '#8A8580',
+            callbacks: {
+              label: ctx => ' ' + ctx.dataset.label + ' : ' + fmt(ctx.raw)
+            }
+          }
+        },
+        scales: {
+          x: {
+            grid: { color: 'rgba(255,255,255,0.04)' },
+            ticks: { color: '#8A8580', font: { size: 11 }, maxTicksLimit: 8 }
+          },
+          y: {
+            grid: { color: 'rgba(255,255,255,0.04)' },
+            ticks: {
+              color: '#8A8580',
+              font: { size: 11 },
+              callback: v => fmtShort(v)
+            }
+          }
+        }
+      }
+    });
+
+    // Graphique répartition (donut)
+    const ctxR = document.getElementById('chart-repartition').getContext('2d');
+    if (chartRep) chartRep.destroy();
+    chartRep = new Chart(ctxR, {
+      type: 'doughnut',
+      data: {
+        labels: ['Capital initial', 'Versements mensuels', 'Intérêts générés'],
+        datasets: [{
+          data: [capital, finalVerse - capital, finalInterets],
+          backgroundColor: ['rgba(212,168,75,0.7)', 'rgba(212,168,75,0.3)', 'rgba(76,175,80,0.6)'],
+          borderColor: ['#D4A84B', 'rgba(212,168,75,0.5)', '#4CAF50'],
+          borderWidth: 1,
+          hoverOffset: 8,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '65%',
+        plugins: {
+          legend: {
+            position: 'right',
+            labels: {
+              color: '#8A8580',
+              font: { size: 12 },
+              padding: 16,
+              boxWidth: 10,
+              boxHeight: 10,
+            }
+          },
+          tooltip: {
+            backgroundColor: '#131416',
+            borderColor: 'rgba(255,255,255,0.07)',
+            borderWidth: 1,
+            titleColor: '#F0EDE8',
+            bodyColor: '#8A8580',
+            callbacks: {
+              label: ctx => ' ' + ctx.label + ' : ' + fmt(ctx.raw)
+            }
+          }
+        }
+      }
+    });
+
+    // Tableau
+    const tbody = document.getElementById('table-body');
+    tbody.innerHTML = '';
+    const step = duree <= 20 ? 1 : duree <= 30 ? 2 : 5;
+    for (let i = 0; i < labels.length; i++) {
+      const annee = i + 1;
+      if (annee % step !== 0 && annee !== duree) continue;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${labels[i]}</td>
+        <td>${fmt(dataVerse[i])}</td>
+        <td class="green-val">${fmt(dataInterets[i])}</td>
+        <td class="highlight">${fmt(dataCapital[i])}</td>
+        <td>${inflation ? fmt(dataReel[i]) : '—'}</td>
+      `;
+      tbody.appendChild(tr);
+    }
+  }
+
+  // Sliders events
+  ['capital', 'mensuel', 'rendement', 'duree'].forEach(id => {
+    document.getElementById(id).addEventListener('input', compute);
+  });
+  document.getElementById('toggle-inflation').addEventListener('change', compute);
+
+  compute();
+</script>
+</body>
+</html>
