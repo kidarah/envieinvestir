@@ -30,10 +30,10 @@ const QUESTIONS = {
     },
     {
       category: 'Fiscalité',
-      q: "Que signifie TOB en Belgique ?",
-      options: ["Taxe sur l'Origine Boursière", "Taxe sur les Opérations Boursières", "Taux d'Obligation Bancaire", "Transfert d'Obligations Boursières"],
+      q: "Qu'est-ce qu'une plus-value boursière ?",
+      options: ["La commission prélevée par le courtier", "Le gain réalisé lors de la vente d'un actif à un prix supérieur à son coût d'achat", "Les dividendes versés par une entreprise", "Les frais de gestion annuels d'un ETF"],
       answer: 1,
-      explanation: "La TOB (Taxe sur les Opérations Boursières) est une taxe belge prélevée à chaque achat ou vente de titres. Son taux varie : 0,12% pour les ETF, 0,35% pour les actions."
+      explanation: "Une plus-value est le profit réalisé quand tu vends un actif plus cher que son prix d'achat. Sa fiscalité varie selon les pays : flat tax de 30 % en France, généralement exonérée pour les particuliers en Belgique, aussi exonérée en Suisse (hors activité professionnelle), et imposée à 50 % au Canada."
     },
     {
       category: 'Stratégie',
@@ -72,10 +72,10 @@ const QUESTIONS = {
     },
     {
       category: 'Fiscalité',
-      q: "En Belgique, quel taux de TOB s'applique aux ETF de capitalisation ?",
-      options: ["0,35%", "1,32%", "0,12%", "2%"],
-      answer: 2,
-      explanation: "En Belgique, le taux de TOB pour les ETF de capitalisation est de 0,12%. Pour les actions, il est de 0,35%. Pour certains fonds de capitalisation non cotés, il peut atteindre 1,32%."
+      q: "Qu'est-ce que la flat tax (Prélèvement Forfaitaire Unique) en France ?",
+      options: ["Une taxe fixe à l'achat de chaque action", "Un taux unique de 30 % sur les revenus du capital (dividendes, intérêts, plus-values)", "Les frais annuels fixes d'un ETF", "Une taxe sur les virements bancaires internationaux"],
+      answer: 1,
+      explanation: "La flat tax française (PFU) de 30 % se décompose en 12,8 % d'impôt sur le revenu + 17,2 % de prélèvements sociaux. Elle s'applique aux dividendes, intérêts et plus-values. Chaque pays a son propre mécanisme : précompte mobilier en Belgique, impôt anticipé en Suisse, retenue à la source au Canada."
     }
   ],
 
@@ -92,7 +92,7 @@ const QUESTIONS = {
       q: "Quelle est la différence entre un ETF capitalisant et distribuant ?",
       options: ["L'ETF capitalisant réinvestit les dividendes, le distribuant les verse", "L'ETF capitalisant est plus risqué", "L'ETF distribuant suit uniquement des actions américaines", "Il n'y a aucune différence fiscale"],
       answer: 0,
-      explanation: "Un ETF capitalisant réinvestit automatiquement les dividendes, profitant des intérêts composés. Un ETF distribuant verse les dividendes en cash. En Belgique, les ETF capitalisants sont souvent fiscalement avantageux car ils évitent le précompte sur dividendes."
+      explanation: "Un ETF capitalisant réinvestit automatiquement les dividendes, profitant des intérêts composés. Un ETF distribuant verse les dividendes en cash. Fiscalement, les ETF capitalisants sont souvent avantageux : en France, ils différent l'imposition ; en Belgique, ils évitent le précompte mobilier sur dividendes."
     },
     {
       category: 'Risque',
@@ -131,10 +131,10 @@ const QUESTIONS = {
     },
     {
       category: 'Fiscalité',
-      q: "En Belgique, faut-il déclarer un compte chez un courtier étranger comme DEGIRO ?",
-      options: ["Non, car c'est un courtier européen", "Oui, à la Banque Nationale de Belgique et dans la déclaration fiscale annuelle", "Seulement si les gains dépassent 10 000€", "Non, la déclaration est automatique"],
+      q: "Qu'est-ce qu'une retenue à la source sur les dividendes étrangers ?",
+      options: ["Des frais de conversion de devises prélevés par le courtier", "Un impôt prélevé par le pays d'origine sur les dividendes versés à des investisseurs étrangers", "La commission du courtier sur chaque dividende reçu", "Un remboursement automatique d'impôt sur les dividendes"],
       answer: 1,
-      explanation: "Tout compte chez un courtier étranger (DEGIRO, Trade Republic, IBKR) doit être déclaré au Point de Contact Central de la BNB et mentionné dans la déclaration fiscale annuelle. C'est obligatoire dès l'ouverture."
+      explanation: "Quand une entreprise américaine verse un dividende à un investisseur européen, les États-Unis prélèvent généralement 15 % à la source (selon les traités fiscaux). Ce montant peut être partiellement récupéré via la déclaration fiscale selon ton pays : formulaire 2042 en France, déclaration annuelle en Belgique, formulaire DA-1 en Suisse."
     },
     {
       category: 'Analyse',
@@ -210,11 +210,11 @@ const QUESTIONS = {
       explanation: "Le factor investing consiste à cibler des facteurs identifiés comme sources de rendement supplémentaire : value (actions décotées), momentum (tendances), quality (entreprises de qualité), size (petites caps). Des ETF factoriels permettent d'y accéder facilement."
     },
     {
-      category: 'Fiscalité',
-      q: "En Belgique, quel est le taux du précompte mobilier sur les dividendes d'actions étrangères perçus via un courtier étranger ?",
-      options: ["15%", "21%", "30%", "0% car exonéré"],
-      answer: 2,
-      explanation: "En Belgique, les dividendes sont soumis au précompte mobilier de 30%. Via un courtier étranger (DEGIRO, TR, IBKR), ce précompte n'est pas automatiquement retenu — tu dois le déclarer et le payer toi-même dans ta déclaration fiscale annuelle."
+      category: 'Fiscalité avancée',
+      q: "Qu'est-ce qu'un PEA (Plan d'Épargne en Actions) ?",
+      options: ["Un fonds indiciel créé par l'AMF française", "Une enveloppe fiscale française permettant d'investir en actions européennes avec exonération d'impôt après 5 ans", "Un compte épargne réglementé garanti par l'État", "Un ETF spécialisé dans les actions du CAC 40"],
+      answer: 1,
+      explanation: "Le PEA est une enveloppe fiscale disponible en France : après 5 ans, les gains et dividendes sont exonérés d'impôt sur le revenu (seuls les prélèvements sociaux de 17,2 % restent dus). Plafonné à 150 000 €. Des équivalents existent ailleurs : le compte-titres ordinaire en Belgique, le 3e pilier en Suisse, le CELI au Canada."
     },
     {
       category: 'Analyse avancée',

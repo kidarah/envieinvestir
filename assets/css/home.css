@@ -85,6 +85,7 @@ nav.nav-scrolled { box-shadow: 0 2px 32px rgba(0,0,0,0.5); }
   margin-bottom: 4px;
 }
 .hero-stat-label { font-size: .78rem; color: var(--muted); }
+.hero-stat-flag  { font-size: 1.4rem; }
 
 /* ══ FLOATING BUBBLES ══
    2 colonnes fixes — évite tout chevauchement
