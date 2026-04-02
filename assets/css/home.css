@@ -251,6 +251,39 @@ nav.nav-scrolled { box-shadow: 0 2px 32px rgba(0,0,0,0.5); }
 .feature-title { font-family:'Fraunces',serif; font-size:.95rem; margin-bottom:.3rem; }
 .feature-text  { font-size:.82rem; color:var(--muted); line-height:1.6; }
 
+/* ══ QUIZ BANNER ══ */
+.quiz-banner {
+  margin: 0 6% 2rem;
+  background: linear-gradient(135deg, var(--bg2) 0%, rgba(212,168,75,.06) 100%);
+  border: 1px solid rgba(212,168,75,.25);
+  border-left: 3px solid var(--gold);
+  padding: 2rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  border-radius: 4px;
+}
+.quiz-banner-tag {
+  display: inline-block;
+  font-size: .72rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 500;
+  margin-bottom: .6rem;
+}
+.quiz-banner h3 { font-family:'Fraunces',serif; font-size:1.15rem; margin-bottom:.4rem; }
+.quiz-banner p  { font-size:.88rem; color:var(--muted); max-width:420px; margin-bottom:.8rem; }
+.quiz-banner-stats {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-size: .8rem;
+  color: var(--muted);
+}
+
 /* ══ TOOL BANNER ══ */
 .tool-banner {
   margin: 0 6% 5rem;
@@ -272,7 +305,7 @@ nav.nav-scrolled { box-shadow: 0 2px 32px rgba(0,0,0,0.5); }
 @media (max-width: 860px) {
   .features    { grid-template-columns: 1fr; margin: 0 5%; }
   .tool-banner { margin: 0 5% 4rem; }
-  .hero        { min-height: auto; padding: 6rem 5% 4rem; }
+  .hero        { min-height: unset; padding: 6rem 5% 4rem; }
 }
 @media (max-width: 480px) {
   .hero-stats  { gap: 1.5rem; }

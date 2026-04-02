@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Investissement — Teste tes connaissances en bourse | EnvieInvestir</title>
+  <meta name="description" content="Quiz gratuit sur l'investissement : actions, ETF, fiscalité belge. 3 niveaux, 30 questions, timer, score. Apprends en t'amusant !">
+  <meta name="keywords" content="quiz investissement, quiz bourse, quiz ETF, apprendre investir, quiz fiscalité belgique">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.envie-investir.com/quiz">
+
+  <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://www.envie-investir.com/quiz">
+  <meta property="og:title"       content="Quiz Investissement — Teste tes connaissances en bourse">
+  <meta property="og:description" content="30 questions, 3 niveaux, timer, score. Apprends la bourse et les ETF en t'amusant !">
+  <meta property="og:image"       content="https://www.envie-investir.com/images/og-quiz.png">
+
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="Quiz Investissement EnvieInvestir">
+  <meta name="twitter:description" content="Teste tes connaissances sur la bourse, les ETF et la fiscalité belge !">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Quiz",
+    "name": "Quiz Investissement — EnvieInvestir",
+    "description": "Quiz sur l'investissement en bourse : actions, ETF, fiscalité belge. 3 niveaux de difficulté.",
+    "url": "https://www.envie-investir.com/quiz",
+    "author": { "@type": "Organization", "name": "EnvieInvestir" },
+    "inLanguage": "fr-BE",
+    "educationalLevel": ["Beginner", "Intermediate", "Expert"],
+    "about": { "@type": "Thing", "name": "Investissement en bourse" }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/quiz.css">
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3823599656644016" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<!-- Particules de fond -->
+<div class="bg-particles" aria-hidden="true"></div>
+
+<!-- Confetti -->
+<div class="confetti-container" id="confetti-container" aria-hidden="true"></div>
+
+<!-- Toast notifications -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- ── NAV ── -->
+<nav class="quiz-nav">
+  <a href="index.html" class="logo" aria-label="EnvieInvestir — Accueil">
+    <span class="w1">Envie</span><span class="w2">Investir</span>
+  </a>
+  <a href="index.html" class="nav-back">← Retour</a>
+</nav>
+
+<div class="quiz-wrapper">
+
+  <!-- ══════════════════════════════
+       ÉCRAN ACCUEIL
+  ══════════════════════════════ -->
+  <div class="screen" id="screen-home">
+    <div class="home-hero">
+
+      <!-- Mascot -->
+      <div class="mascot-container">
+        <div class="mascot-ring" aria-hidden="true"></div>
+        <div class="mascot-ring" aria-hidden="true"></div>
+        <div id="home-mascot" aria-hidden="true"></div>
+      </div>
+
+      <h1>Teste tes connaissances<br><em>en investissement</em></h1>
+      <p>30 questions sur la bourse, les ETF et la fiscalité. Timer, scores, explications — apprends en t'amusant !</p>
+
+      <div class="home-stats">
+        <div class="home-stat-badge"><span>30</span> questions</div>
+        <div class="home-stat-badge"><span>3</span> niveaux</div>
+        <div class="home-stat-badge"><span>20s</span> par question</div>
+        <div class="home-stat-badge"><span>100%</span> gratuit</div>
+      </div>
+
+      <!-- Niveaux -->
+      <div class="level-buttons" role="radiogroup" aria-label="Choisir un niveau">
+        <button class="level-btn" data-level="debutant" role="radio">
+          <span class="level-icon">🌱</span>
+          <span class="level-name">Débutant</span>
+          <span class="level-desc">Les bases de la bourse</span>
+        </button>
+        <button class="level-btn" data-level="intermediaire" role="radio">
+          <span class="level-icon">📈</span>
+          <span class="level-name">Intermédiaire</span>
+          <span class="level-desc">Analyse et stratégie</span>
+        </button>
+        <button class="level-btn" data-level="expert" role="radio">
+          <span class="level-icon">🎯</span>
+          <span class="level-name">Expert</span>
+          <span class="level-desc">Finance avancée</span>
+        </button>
+      </div>
+
+      <button class="btn-start" id="btn-start" aria-label="Commencer le quiz">
+        Commencer le quiz →
+      </button>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════
+       ÉCRAN QUIZ
+  ══════════════════════════════ -->
+  <div class="screen" id="screen-quiz" style="display:none;">
+
+    <!-- Progress -->
+    <div class="quiz-progress">
+      <div class="progress-header">
+        <span id="q-counter">1 / 10</span>
+        <span id="hud-level">Débutant</span>
+      </div>
+      <div class="progress-bar-track">
+        <div class="progress-bar-fill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <!-- HUD -->
+    <div class="quiz-hud">
+      <div class="hud-badge">
+        <span class="hud-icon">⭐</span>
+        <span class="hud-val" id="hud-score">0</span>
+        <span style="font-size:.78rem;color:var(--muted);">pts</span>
+      </div>
+      <div class="hud-badge" id="streak-badge">
+        <span class="hud-icon">🔥</span>
+        <span class="hud-val" id="streak-val">0</span>
+        <span style="font-size:.78rem;color:var(--muted);">streak</span>
+      </div>
+      <div class="hud-badge timer-wrap">
+        <div class="timer-circle" aria-label="Temps restant">
+          <svg class="timer-svg" viewBox="0 0 46 46" width="46" height="46">
+            <circle class="timer-track" cx="23" cy="23" r="20"/>
+            <circle class="timer-fill" id="timer-fill" cx="23" cy="23" r="20"/>
+          </svg>
+          <span class="timer-num" id="timer-num">20</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mascot + bulle -->
+    <div class="quiz-mascot-wrap">
+      <div id="quiz-mascot" class="quiz-mascot" aria-hidden="true"></div>
+      <div class="speech-bubble">
+        <span id="speech-text">Prêt ? C'est parti !</span>
+      </div>
+    </div>
+
+    <!-- Question -->
+    <div class="question-card">
+      <span class="question-category" id="q-category">Les bases</span>
+      <p class="question-text" id="q-text">Question...</p>
+    </div>
+
+    <!-- Options -->
+    <div class="options-grid" id="options-grid" role="group" aria-label="Options de réponse"></div>
+
+    <!-- Explication -->
+    <div class="explanation" id="explanation" style="display:none;" role="alert"></div>
+
+    <!-- Bouton suivant -->
+    <button class="btn-next" id="btn-next">Question suivante →</button>
+
+  </div>
+
+  <!-- ══════════════════════════════
+       ÉCRAN RÉSULTAT
+  ══════════════════════════════ -->
+  <div class="screen result-screen" id="screen-result" style="display:none;">
+
+    <!-- Mascot résultat -->
+    <div class="result-mascot-wrap">
+      <div id="result-mascot" class="result-mascot" aria-hidden="true"></div>
+    </div>
+
+    <h2 class="result-title" id="result-title">Bravo !</h2>
+    <p class="result-subtitle" id="result-subtitle">Tu es sur la bonne voie !</p>
+
+    <!-- Score cercle -->
+    <div class="score-circle-wrap" aria-label="Score final">
+      <svg class="score-circle-svg" viewBox="0 0 140 140" width="140" height="140">
+        <circle class="score-circle-track" cx="70" cy="70" r="65"/>
+        <circle class="score-circle-fill" cx="70" cy="70" r="65"/>
+      </svg>
+      <div class="score-circle-text">
+        <span class="score-number" id="score-number">0%</span>
+        <span class="score-total">de réussite</span>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="result-stats">
+      <div class="result-stat">
+        <span class="result-stat-val" id="res-correct">0/10</span>
+        <span class="result-stat-label">Bonnes réponses</span>
+      </div>
+      <div class="result-stat">
+        <span class="result-stat-val" id="res-score">0</span>
+        <span class="result-stat-label">Score total</span>
+      </div>
+      <div class="result-stat">
+        <span class="result-stat-val" id="res-streak">×0</span>
+        <span class="result-stat-label">Meilleur streak</span>
+      </div>
+    </div>
+
+    <!-- Badge niveau -->
+    <div class="result-level-badge" id="result-level-badge">🌱 Débutant · 0%</div>
+
+    <!-- CTA article -->
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.6;">
+      Pour approfondir tes connaissances, lis nos guides gratuits 👇
+    </p>
+    <a href="apprendre-bourse-actions-etf" style="display:block;text-align:center;color:var(--gold);font-size:.88rem;text-decoration:none;margin-bottom:2rem;border:1px solid rgba(212,168,75,.3);padding:.8rem;border-radius:8px;">
+      → La bourse, les actions et les ETF expliqués simplement
+    </a>
+
+    <!-- Actions -->
+    <div class="result-actions">
+      <button class="btn-retry" id="btn-retry">Rejouer 🔄</button>
+      <button class="btn-share" id="btn-share">Partager 📤</button>
+    </div>
+
+  </div>
+
+</div>
+
+<script src="assets/js/quiz.js"></script>
+</body>
+</html>
